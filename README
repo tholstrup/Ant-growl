@@ -1,0 +1,20 @@
+#summary How to use
+
+= Introduction =
+
+= Prerequisites =
+
+  * The ant-growllistener jar
+  * Growl (http://growl.info)
+
+= Details =
+
+== Installation ==
+
+  * Put ant-growllistener.jar into Ant's lib directory or $HOME/.ant/lib
+
+== Using the Ant Growl Notifier ==
+
+  * To make ant use the new listener, invoke ant like this:
+    * ant -listener com.google.code.ant.growlnotify.GrowlListener
+    * You could also add "-listener com.google.code.ant.growlnotify.GrowlListener" to your ANT_ARGS environment variable

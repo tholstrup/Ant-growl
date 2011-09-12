@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<project name="ant-growlnotify" default="dist" basedir=".">
+	<property environment="env" />
+	<property name="src" value="src" />
+	<property name="build" value="build" />
+	<property name="dist" value="dist" />
+	<property name="lib" value="lib" />
+	<property name="ant.jar" value="${env.ANT_HOME}/lib/ant.jar" />
+	<property name="version" value="0.4" />
+
+	<path id="compile.classpath">
+		<fileset dir="${lib}" includes="*.jar" />
+	</path>
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="compile" depends="init" description="Compile the code">
+		<javac srcdir="${src}" destdir="${build}" classpathref="compile.classpath" source="1.5" target="1.5" />
+	</target>
+
+	<target name="dist" depends="clean, compile" description="Build a jar">
+		<mkdir dir="${dist}/lib" />
+		<jar jarfile="${dist}/lib/ant-growllistener-${version}.jar">
+			<fileset dir="${build}" />
+			<fileset dir="${basedir}">
+				<include name="LICENSE" />
+				<include name="README" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="clean" description="Clean up">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+
+</project>
