@@ -140,12 +140,20 @@ public class GrowlListener implements SubBuildListener
 
     private String getFailPic ()
     {
-        return failImgList.get(getRandIndex(failImgList.size()));
+        if (failImgList.size() > 0)
+        {
+            return failImgList.get(getRandIndex(failImgList.size()));
+        }
+        return null;
     }
 
     private String getSuccessPic ()
     {
-        return successImgList.get(getRandIndex(successImgList.size()));
+        if (successImgList.size() > 0)
+        {
+            return successImgList.get(getRandIndex(successImgList.size()));
+        }
+        return null;
     }
 
     private String getNeutralPic ()
