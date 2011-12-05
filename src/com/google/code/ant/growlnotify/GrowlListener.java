@@ -28,7 +28,7 @@ public class GrowlListener implements SubBuildListener
     private List<String> targetIgnoreFilter = new ArrayList<String>();
 
     private String antImgPath = ANT_IMG_PATH;
-    private boolean successFailOnly = SUCC_FAIL_ONLY != null ? SUCC_FAIL_ONLY : false;
+    private boolean successFailOnly = SUCC_FAIL_ONLY != null ? "true".equals(SUCC_FAIL_ONLY) : false;
 
     public GrowlListener()
     {
