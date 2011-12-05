@@ -14,7 +14,7 @@ public class GrowlListener implements SubBuildListener
 
     private static final String ANT_GROWL_HOME = System.getProperty("user.home") + File.separator + ".ant-growl";
     private static final String TARGET_IGNORE = System.getenv("ANT_GROWL_TARGET_FILTER");
-    private static final boolean SUCC_FAIL_ONLY = System.getenv("ANT_GROWL_SUCC_FAIL_ONLY") != null ? true : false;
+    private static final String SUCC_FAIL_ONLY = System.getenv("ANT_GROWL_SUCC_FAIL_ONLY");
     private static final String GOOD_TIMES_IMG_FOLDER = ANT_GROWL_HOME + File.separator + "success";
     private static final String BAD_TIMES_IMG_FOLDER = ANT_GROWL_HOME + File.separator + "fail";
 
@@ -28,6 +28,7 @@ public class GrowlListener implements SubBuildListener
     private List<String> targetIgnoreFilter = new ArrayList<String>();
 
     private String antImgPath = ANT_IMG_PATH;
+    private boolean successFailOnly = SUCC_FAIL_ONLY != null ? SUCC_FAIL_ONLY : false;
 
     public GrowlListener()
     {
@@ -79,7 +80,7 @@ public class GrowlListener implements SubBuildListener
     @Override
     public void buildStarted (BuildEvent event)
     {
-        if (SUCC_FAIL_ONLY) 
+        if (successFailOnly) 
         {
             return;
         }
@@ -102,7 +103,7 @@ public class GrowlListener implements SubBuildListener
     @Override
     public void targetFinished (BuildEvent event)
     {
-        if (SUCC_FAIL_ONLY) 
+        if (successFailOnly) 
         {
             return;
         }
@@ -115,7 +116,7 @@ public class GrowlListener implements SubBuildListener
     @Override
     public void targetStarted (BuildEvent event)
     {
-        if (SUCC_FAIL_ONLY) 
+        if (successFailOnly) 
         {
             return;
         }           
@@ -134,7 +135,7 @@ public class GrowlListener implements SubBuildListener
     @Override
     public void subBuildStarted (BuildEvent event)
     {
-        if (SUCC_FAIL_ONLY) 
+        if (successFailOnly) 
         {
             return;
         }
