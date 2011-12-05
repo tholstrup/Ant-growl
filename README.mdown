@@ -4,24 +4,27 @@
 
 = Prerequisites =
 
-  * The ant-growllistener jar
-  * Growl (http://growl.info)
+* The ant-growllistener jar
+* Growl (http://growl.info)
 
 = Details =
 
 == Installation ==
 
-  * Put `ant-growllistener.jar` into Ant's lib directory or `$HOME/.ant/lib`
+* Put `ant-growllistener.jar` into Ant's lib directory or `$HOME/.ant/lib`
 
-  === Supported environment variables
+= Supported environment variables =
 
-  * ANT_GROWL_TARGET_FILTER - will allow to filter by targets, won't show growl message for the specified targets.
-	export ANT_GROWL_TARGET_FILTER=init;compile
-  * ANT_GROWL_SUCC_FAIL_ONLY - will only show success and or failure growl messages.
- 	export ANT_GROWL_SUCC_FAIL_ONLY=true 
+* ANT_GROWL_TARGET_FILTER - will allow to filter by targets, won't show growl message for the specified targets.
+	- `export ANT_GROWL_TARGET_FILTER=init;compile`
+
+* ANT_GROWL_SUCC_FAIL_ONLY - will only show success and or failure growl messages.
+	- `export ANT_GROWL_SUCC_FAIL_ONLY=true` 
+
 
 == Using the Ant Growl Notifier ==
 
-  * To make ant use the new listener, invoke ant like this:
-    * ant -listener com.google.code.ant.growlnotify.GrowlListener
-    * You could also add "-listener com.google.code.ant.growlnotify.GrowlListener" to your ANT_ARGS environment variable
+* To make ant use the new listener, invoke ant like this:
+	- `ant -listener com.google.code.ant.growlnotify.GrowlListener`
+* You could also add `"-listener com.google.code.ant.growlnotify.GrowlListener"` to your ANT_ARGS environment variable.
+	- `export ANT_ARGS="-listener com.google.code.ant.growlnotify.GrowlListener"`
