@@ -93,10 +93,10 @@ public class GrowlListener implements SubBuildListener
         String projectName = event.getProject().getName();
         if (exception != null)
         {
-            sendMessage("Build failed: " + exception.toString(), GrowlNotification.HIGH, true, getFailPic());
+            sendMessage("Build failed: " + exception.toString(), GrowlNotification.HIGH, false, getFailPic());
             return;
         }
-        sendMessage("Build finished for " + projectName, GrowlNotification.NORMAL, true, getSuccessPic());
+        sendMessage("Build finished for " + projectName, GrowlNotification.NORMAL, false, getSuccessPic());
     }
 
     @Override
@@ -128,7 +128,7 @@ public class GrowlListener implements SubBuildListener
     @Override
     public void subBuildFinished (BuildEvent event)
     {
-        sendMessage("Finished sub project build: " + event.getProject().getName(), GrowlNotification.NORMAL, true, getNeutralPic());
+        sendMessage("Finished sub project build: " + event.getProject().getName(), GrowlNotification.NORMAL, false, getNeutralPic());
     }
 
     @Override
