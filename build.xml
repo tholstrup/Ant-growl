@@ -6,7 +6,7 @@
 	<property name="dist" value="dist" />
 	<property name="lib" value="lib" />
 	<property name="ant.jar" value="${env.ANT_HOME}/lib/ant.jar" />
-	<property name="version" value="0.4" />
+	<property name="version" value="0.5" />
 
 	<path id="compile.classpath">
 		<fileset dir="${lib}" includes="*.jar" />

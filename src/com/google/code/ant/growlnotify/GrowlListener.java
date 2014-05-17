@@ -14,6 +14,7 @@ public class GrowlListener implements SubBuildListener
 
     private static final String ANT_GROWL_HOME = System.getProperty("user.home") + File.separator + ".ant-growl";
     private static final String TARGET_IGNORE = System.getenv("ANT_GROWL_TARGET_FILTER");
+    private static final String SUCC_FAIL_ONLY = System.getenv("ANT_GROWL_SUCC_FAIL_ONLY");
     private static final String GOOD_TIMES_IMG_FOLDER = ANT_GROWL_HOME + File.separator + "success";
     private static final String BAD_TIMES_IMG_FOLDER = ANT_GROWL_HOME + File.separator + "fail";
 
@@ -27,10 +28,10 @@ public class GrowlListener implements SubBuildListener
     private List<String> targetIgnoreFilter = new ArrayList<String>();
 
     private String antImgPath = ANT_IMG_PATH;
+    private boolean successFailOnly = SUCC_FAIL_ONLY != null ? "true".equals(SUCC_FAIL_ONLY) : false;
 
     public GrowlListener()
     {
-
         try
         {
             successImgList.addAll(getPics(GOOD_TIMES_IMG_FOLDER));
@@ -47,7 +48,6 @@ public class GrowlListener implements SubBuildListener
         {
             // don't care
         }
-
     }
 
     private List<String> getPics (String folderName)
@@ -80,6 +80,10 @@ public class GrowlListener implements SubBuildListener
     @Override
     public void buildStarted (BuildEvent event)
     {
+        if (successFailOnly) 
+        {
+            return;
+        }
         sendMessage("Build started ", GrowlNotification.NORMAL, false, null);
     }
 
@@ -90,15 +94,19 @@ public class GrowlListener implements SubBuildListener
         String projectName = event.getProject().getName();
         if (exception != null)
         {
-            sendMessage("Build failed: " + exception.toString(), GrowlNotification.HIGH, true, getFailPic());
+            sendMessage("Build failed: " + exception.toString(), GrowlNotification.HIGH, false, getFailPic());
             return;
         }
-        sendMessage("Build finished for " + projectName, GrowlNotification.NORMAL, true, getSuccessPic());
+        sendMessage("Build finished for " + projectName, GrowlNotification.NORMAL, false, getSuccessPic());
     }
 
     @Override
     public void targetFinished (BuildEvent event)
     {
+        if (successFailOnly) 
+        {
+            return;
+        }
         if (!targetIgnoreFilter.contains(event.getTarget().getName()))
         {
             sendMessage("Finished target: " + event.getTarget(), GrowlNotification.NORMAL, false, getNeutralPic());
@@ -108,6 +116,10 @@ public class GrowlListener implements SubBuildListener
     @Override
     public void targetStarted (BuildEvent event)
     {
+        if (successFailOnly) 
+        {
+            return;
+        }           
         if (!targetIgnoreFilter.contains(event.getTarget().getName()))
         {
             sendMessage("Started target: " + event.getTarget(), GrowlNotification.NORMAL, false, getNeutralPic());
@@ -117,12 +129,16 @@ public class GrowlListener implements SubBuildListener
     @Override
     public void subBuildFinished (BuildEvent event)
     {
-        sendMessage("Finished sub project build: " + event.getProject().getName(), GrowlNotification.NORMAL, true, getNeutralPic());
+        sendMessage("Finished sub project build: " + event.getProject().getName(), GrowlNotification.NORMAL, false, getNeutralPic());
     }
 
     @Override
     public void subBuildStarted (BuildEvent event)
     {
+        if (successFailOnly) 
+        {
+            return;
+        }
         sendMessage("Started target: " + event.getProject().getName(), GrowlNotification.NORMAL, false, getNeutralPic());
     }
 
@@ -140,12 +156,20 @@ public class GrowlListener implements SubBuildListener
 
     private String getFailPic ()
     {
-        return failImgList.get(getRandIndex(failImgList.size()));
+        if (failImgList.size() > 0)
+        {
+            return failImgList.get(getRandIndex(failImgList.size()));
+        }
+        return null;
     }
 
     private String getSuccessPic ()
     {
-        return successImgList.get(getRandIndex(successImgList.size()));
+        if (successImgList.size() > 0)
+        {
+            return successImgList.get(getRandIndex(successImgList.size()));
+        }
+        return null;
     }
 
     private String getNeutralPic ()
